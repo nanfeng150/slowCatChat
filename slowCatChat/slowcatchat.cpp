@@ -4,7 +4,7 @@ slowCatChat::slowCatChat(QObject *parent) : QObject(parent)
 {
     //初始化登录界面
     m_accountOperateWidget = new accountOperate;
-    m_accountOperateWidget -> show();
+    //m_accountOperateWidget -> show();
 
     //套接字
     m_tcpSocket = new QTcpSocket;
@@ -14,6 +14,15 @@ slowCatChat::slowCatChat(QObject *parent) : QObject(parent)
 
     connect(m_accountOperateWidget, &accountOperate::userRegist, this, &slowCatChat::userWantRegist);
     connect(m_accountOperateWidget, &accountOperate::userLogin, this, &slowCatChat::userWantLogin);
+
+    //设置用户名界面
+    m_setUserNameWidget = new setUserName;
+    m_setUserNameWidget -> setWindowTitle(QStringLiteral("设置用户名"));
+    m_setUserNameWidget -> setWindowIcon(QIcon(":/icons/appIcon.png"));
+    m_setUserNameWidget -> resize(420, 280);
+    m_setUserNameWidget -> show();
+
+    connect(m_setUserNameWidget, &setUserName::userSetName, this, &slowCatChat::userWantSetName);
 }
 
 slowCatChat::~slowCatChat()
@@ -40,6 +49,7 @@ void slowCatChat::recvMsg()
     case ENUM_MSG_TYPE_LOGIN_RESPOND : {
         if(0 == strcmp(LOGIN_OK, pdu -> caData)){//登录成功
             m_accountOperateWidget -> hide();
+            m_setUserNameWidget -> show();
         }
         else if(0 == strcmp(LOGIN_USER_NO_EXIST, pdu -> caData))//用户不存在
             QMessageBox::critical(m_accountOperateWidget, "登录", "用户不存在");
@@ -96,4 +106,19 @@ void slowCatChat::userWantRegist()
 
     free(pdu);
     pdu = nullptr;
+}
+
+void slowCatChat::userWantSetName()
+{
+     QByteArray account = m_accountOperateWidget->getAccount().toUtf8();
+     QByteArray userName = m_setUserNameWidget -> getUserName().toUtf8();
+     PDU *pdu = mkPDU(0);
+     pdu -> uiMsgType = ENUM_MSG_TYPE_SETUSERNAME_REQUEST;//设置用户名
+
+     memcpy(pdu -> caData, account.data(), 32);
+     memcpy(pdu -> caData + 32, userName.data(), 32);
+     m_tcpSocket->write((char*)pdu, pdu -> uiPDULen);
+
+     free(pdu);
+     pdu = nullptr;
 }

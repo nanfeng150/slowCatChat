@@ -22,12 +22,16 @@ void tcpSocket::recvMsg()
 
     PDU* resPdu = nullptr;
     switch(pdu -> uiMsgType){
-    case ENUM_MSG_TYPE_REGIST_REQUEST : {
+    case ENUM_MSG_TYPE_REGIST_REQUEST : {//注册请求
         resPdu = handleRegistRequest(pdu);
         break;
     }
-    case ENUM_MSG_TYPE_LOGIN_REQUEST : {
+    case ENUM_MSG_TYPE_LOGIN_REQUEST : {//登录请求
         resPdu = handleLoginRequest(pdu);
+        break;
+    }
+    case ENUM_MSG_TYPE_SETUSERNAME_REQUEST : {//设置用户名请求
+        resPdu = handleSetUserNameRequest(pdu);
         break;
     }
     default:break;
@@ -93,4 +97,9 @@ PDU *tcpSocket::handleLoginRequest(PDU *msg)
         strcpy(resPdu -> caData, LOGIN_ERROR_REPEAT);
     }
     return resPdu;
+}
+
+PDU *tcpSocket::handleSetUserNameRequest(PDU *msg)
+{
+    //todo
 }

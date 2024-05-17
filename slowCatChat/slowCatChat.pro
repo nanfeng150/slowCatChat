@@ -28,12 +28,14 @@ SOURCES += \
         main.cpp \
         accountoperate.cpp \
     protocol.cpp \
-    slowcatchat.cpp
+    slowcatchat.cpp \
+    setusername.cpp
 
 HEADERS += \
         accountoperate.h \
     protocol.h \
-    slowcatchat.h
+    slowcatchat.h \
+    setusername.h
 
 FORMS += \
         accountoperate.ui
