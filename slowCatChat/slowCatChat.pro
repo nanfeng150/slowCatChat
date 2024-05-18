@@ -29,13 +29,17 @@ SOURCES += \
         accountoperate.cpp \
     protocol.cpp \
     slowcatchat.cpp \
-    setusername.cpp
+    setusername.cpp \
+    leftuseroperateitem.cpp \
+    useroperatewidget.cpp
 
 HEADERS += \
         accountoperate.h \
     protocol.h \
     slowcatchat.h \
-    setusername.h
+    setusername.h \
+    leftuseroperateitem.h \
+    useroperatewidget.h
 
 FORMS += \
         accountoperate.ui

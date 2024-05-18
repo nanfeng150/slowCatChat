@@ -4,7 +4,7 @@ slowCatChat::slowCatChat(QObject *parent) : QObject(parent)
 {
     //初始化登录界面
     m_accountOperateWidget = new accountOperate;
-    m_accountOperateWidget -> show();
+    //m_accountOperateWidget -> show();
 
     //套接字
     m_tcpSocket = new QTcpSocket;
@@ -49,7 +49,7 @@ void slowCatChat::recvMsg()
     case ENUM_MSG_TYPE_LOGIN_RESPOND : {
         if(0 == strcmp(LOGIN_OK_NAMENULL, pdu -> caData)){//登录成功设置用户名
             m_accountOperateWidget -> hide();
-            m_setUserNameWidget -> show();
+            //m_setUserNameWidget -> show();
         }
         else if(0 == strcmp(LOGIN_OK_NAMENONULL, pdu -> caData)){//登录成功跳转到用户界面
             m_accountOperateWidget -> hide();
