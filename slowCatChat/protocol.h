@@ -1,6 +1,7 @@
 #ifndef PROTOCOL_H
 #define PROTOCOL_H
 
+#include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include <QTimer>
@@ -12,10 +13,14 @@ typedef unsigned int uint;
 #define REGIST_NO "regist failed"
 #define REGIST_ERROR "account repeat"
 //登录结果
-#define LOGIN_OK "login succeed"
+#define LOGIN_OK_NAMENULL "login succeed nameIsNull"
+#define LOGIN_OK_NAMENONULL "login succeed"
 #define LOGIN_USER_NO_EXIST "account no exist"
 #define LOGIN_ERROR_PASSWORD "password error"
 #define LOGIN_ERROR_REPEAT "repeat login"
+//设置用户名结果
+#define SETUSERNAME_OK "set userName succeed"
+#define SETUSERNAME_ERROR "userName repeat"
 //延时函数
 #define SYNCED_EXEC_DELAY_TIME(TIME_MS) {QEventLoop eventLoop;\
     QTimer::singleShot(TIME_MS, &eventLoop, &QEventLoop::quit);\
@@ -49,7 +54,8 @@ enum CHECK_USER_LOGIN{
     ENUM_CHECK_USER_LOGIN = 0,
     ENUM_USER_NO_EXIST,       // 用户不存在
     ENUM_USER_PASSWORD_ERROR, // 用户密码错误
-    ENUM_USER_EXIST_RGIHT,    // 用户存在且密码正确
     ENUM_USER_REPEAT_LOGIN,   //用户重复登录
+    ENUM_USER_EXIST_NAMENULL,    //用户存在用户为空
+    ENUM_USER_EXIST_NAMENONULL,    //用户存在用户名不为空
 };
 #endif // PROTOCOL_H

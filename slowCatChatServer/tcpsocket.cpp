@@ -90,16 +90,34 @@ PDU *tcpSocket::handleLoginRequest(PDU *msg)
     else if(ENUM_USER_PASSWORD_ERROR == checkUserLoginRet){//密码错误
         strcpy(resPdu -> caData, LOGIN_ERROR_PASSWORD);
     }
-    else if(ENUM_USER_EXIST_RGIHT == checkUserLoginRet){//登录成功
-        strcpy(resPdu -> caData, LOGIN_OK);
-    }
     else if(ENUM_USER_REPEAT_LOGIN == checkUserLoginRet){//用户重复登录
         strcpy(resPdu -> caData, LOGIN_ERROR_REPEAT);
+    }
+    else if(ENUM_USER_EXIST_NAMENULL == checkUserLoginRet){//登录成功但用户名为空
+        strcpy(resPdu -> caData, LOGIN_OK_NAMENULL);
+    }
+    else if(ENUM_USER_EXIST_NAMENONULL == checkUserLoginRet){//登录成功且用户名不为空
+        strcpy(resPdu -> caData, LOGIN_OK_NAMENONULL);
     }
     return resPdu;
 }
 
 PDU *tcpSocket::handleSetUserNameRequest(PDU *msg)
 {
-    //todo
+    char account[32];
+    char username[32];
+    memset(account, '\0', 32);
+    memset(username, '\0', 32);
+    strncpy(account, msg -> caData, 32);
+    strncpy(username, msg -> caData + 32, 32);
+    uint unSetUserNameResult =  operatedatabase::getDBoperateInstance().userSetNameToDb(account, username);
+    PDU* resPdu = mkPDU(0);
+    resPdu -> uiMsgType = ENUM_MSG_TYPE_SETUSERNAME_RESPOND;
+    if(ENUM_CHECK_USER_NAME_EXIST == unSetUserNameResult){
+        strcpy(resPdu -> caData, SETUSERNAME_ERROR);
+    }
+    else if(ENUM_CHECK_USER_NAME_OK == unSetUserNameResult){
+        strcpy(resPdu -> caData, SETUSERNAME_OK);
+    }
+    return resPdu;
 }

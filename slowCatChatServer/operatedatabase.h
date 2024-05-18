@@ -16,6 +16,7 @@ public: //处理数据入库操作
     bool userinsertToDb(char* account, char* password);//注册用户信息入库
     uint userLoginCheck(char* account, char* password);//检查用户登录
     void userOffline(const char* account);//用户离线改变状态
+    uint userSetNameToDb(char* account, char* username);//用户设置用户名
 private:
     QSqlDatabase m_databsaeOperate;//数据库驱动
 };

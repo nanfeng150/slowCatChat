@@ -20,6 +20,7 @@ class setUserName : public QWidget
     Q_OBJECT
 public:
     explicit setUserName(QWidget *parent = nullptr);
+    ~setUserName() override;
     QString getUserName(){return m_userName;}
 
 public slots:

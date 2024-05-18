@@ -94,7 +94,15 @@ uint operatedatabase::userLoginCheck(char *account, char *password)
     QString updateUserStatus = QString("update user set online_status = 1 where account_name = \'" \
                                        "%1\' and password = \'%2\'").arg(account).arg(password);
     sqlQuery.exec(updateUserStatus);
-    return ENUM_USER_EXIST_RGIHT;
+    //查询用户名
+    sqlQuery.clear();
+    QString queryUserName = QString("select username from user where account_name = \'%1\'").arg(account);
+    sqlQuery.exec(queryUserName);
+    while(sqlQuery.next()){
+        if(sqlQuery.value("username").toString().isEmpty())
+            return ENUM_USER_EXIST_NAMENULL;
+    }
+    return ENUM_USER_EXIST_NAMENONULL;
 }
 
 void operatedatabase::userOffline(const char *account)
@@ -104,4 +112,21 @@ void operatedatabase::userOffline(const char *account)
     QSqlQuery sqlQuery;
     QString userOffline = QString("update user set online_status = 0 where account_name = \'%1\'").arg(account);
     sqlQuery.exec(userOffline);//用户离线，状态设为0
+}
+
+uint operatedatabase::userSetNameToDb(char *account, char *username)
+{
+    if(nullptr == account || nullptr == username)
+        return ENUM_CHECK_USER_NAME;
+    QSqlQuery sqlQuery;
+    QString userNameIsExist = QString("select username from user");
+    sqlQuery.exec(userNameIsExist);
+    while(sqlQuery.next()){
+        if(sqlQuery.value("username").toString() == QString(username))
+            return ENUM_CHECK_USER_NAME_EXIST;
+    }
+    QString userSetName = QString("update user set username = \'%1\' where account_name = \'%2\'")
+                                 .arg(username).arg(account);
+    sqlQuery.exec(userSetName);
+    return ENUM_CHECK_USER_NAME_OK;
 }

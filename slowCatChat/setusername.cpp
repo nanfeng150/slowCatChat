@@ -24,6 +24,16 @@ setUserName::setUserName(QWidget *parent) : QWidget(parent)
     connect(m_userNameAffirmBtn, &QPushButton::clicked, this, &setUserName::on_userNameAffirmBtn_clicked);
 }
 
+setUserName::~setUserName()
+{
+    delete m_promptLab;
+    delete m_userNameText;
+    delete m_userNameAffirmBtn;
+    delete m_HBoxLayout;
+    delete m_userNameLab;
+    delete m_VBoxLayout;
+}
+
 void setUserName::on_userNameAffirmBtn_clicked()
 {
     m_userName = m_userNameText -> text();
@@ -32,7 +42,7 @@ void setUserName::on_userNameAffirmBtn_clicked()
         m_userName.clear();
         return;
     }
-    else if(32 <= m_userName.size()){
+    else if(32 <= m_userName.toUtf8().size()){
         QMessageBox::warning(this, "设置用户名", "用户名太长");
         m_userName.clear();
         return;
