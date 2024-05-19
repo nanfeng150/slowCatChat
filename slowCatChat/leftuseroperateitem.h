@@ -5,6 +5,8 @@
 #include <QLabel>
 #include <QPixmap>
 #include <QVBoxLayout>
+#include <QMouseEvent>
+
 class leftUserOperateItem : public QWidget
 {
     Q_OBJECT
@@ -14,14 +16,14 @@ public:
 
 public:
     void setToolIcon(QPixmap);//给左侧项设置图标
-
 signals:
     void mouseLeftClicked();
-
+    void mouseMoveToToolIcon();
+    void mouseLeaveToToolIcon();
 protected:
     void mousePressEvent(QMouseEvent*) override;//鼠标点击事件
     void mouseMoveEvent(QMouseEvent*) override;//鼠标移入事件
-    void leaveEvent(QEvent*) override; //鼠标离开事件
+    void leaveEvent(QEvent*) override;//鼠标离开事件
 private:
     QLabel* m_toolIcon = nullptr;
     QVBoxLayout* m_hBoxLayout = nullptr;

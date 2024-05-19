@@ -4,12 +4,7 @@ leftUserOperateItem::leftUserOperateItem(QWidget *parent) : QWidget(parent)
 {
     setMouseTracking(true);
     m_toolIcon = new QLabel;
-    m_toolIcon -> setFixedSize(60, 60);//设置显示大小
-
-    m_toolIcon -> setStyleSheet("QLabel{border : 1px solid black; }");
-    QPixmap pixmap(":/icons/appIcon.png");
-    setToolIcon(pixmap);
-
+    m_toolIcon -> setFixedSize(30, 30);//设置显示大小
     m_hBoxLayout = new QVBoxLayout;
     m_hBoxLayout -> addWidget(m_toolIcon);
     setLayout(m_hBoxLayout);
@@ -28,18 +23,24 @@ void leftUserOperateItem::setToolIcon(QPixmap pixmap)
 }
 
 
-void leftUserOperateItem::mousePressEvent(QMouseEvent *)
+void leftUserOperateItem::mousePressEvent(QMouseEvent *event)
 {
-    qDebug() << "鼠标按键被点击";
-    emit mouseLeftClicked();
+    //只处理鼠标左键点击事件
+    if(event -> button() == Qt::LeftButton){
+        qDebug() << "鼠标左按键被点击";
+        emit mouseLeftClicked();
+    }
 }
 
-void leftUserOperateItem::mouseMoveEvent(QMouseEvent *)//
+void leftUserOperateItem::mouseMoveEvent(QMouseEvent *event)
 {
-    this -> setStyleSheet("leftUserOperateItem {background-color : gray;}");
+    //qDebug() << "鼠标移入工具控件上";
+    emit mouseMoveToToolIcon();
 }
 
-void leftUserOperateItem::leaveEvent(QEvent *)
+void leftUserOperateItem::leaveEvent(QEvent *event)
 {
-    this -> setStyleSheet("leftUserOperateItem {background-color : white;}");
+    //qDebug() << "鼠标离开工具控件上";
+    emit mouseLeaveToToolIcon();
 }
+

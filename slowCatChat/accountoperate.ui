@@ -17,7 +17,7 @@
    <iconset resource="icons.qrc">
     <normaloff>:/icons/appIcon.png</normaloff>:/icons/appIcon.png</iconset>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>30</x>

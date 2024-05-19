@@ -3,5 +3,19 @@
         <file>icons/appIcon.png</file>
         <file>icons/loginIcon.png</file>
         <file>icons/registIcon.png</file>
+        <file>icons/chatIcon_blue.png</file>
+        <file>icons/chatIcon_gray.png</file>
+        <file>icons/contactIcon_blue.png</file>
+        <file>icons/fileIcon_blue.png</file>
+        <file>icons/fileIcon_gray.png</file>
+        <file>icons/musicIcon_blue.png</file>
+        <file>icons/musicIcon_gray.png</file>
+        <file>icons/photoIcon_blue.png</file>
+        <file>icons/photoIcon_gray.png</file>
+        <file>icons/videoIcon_blue.png</file>
+        <file>icons/videoIcon_gray.png</file>
+        <file>icons/contactIcon_gray.png</file>
+        <file>icons/menuIcon_blue.png</file>
+        <file>icons/menuIcon_gray.png</file>
     </qresource>
 </RCC>
