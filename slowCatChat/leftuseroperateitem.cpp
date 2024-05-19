@@ -25,11 +25,10 @@ void leftUserOperateItem::setToolIcon(QPixmap pixmap)
 
 void leftUserOperateItem::mousePressEvent(QMouseEvent *event)
 {
-    //只处理鼠标左键点击事件
-    if(event -> button() == Qt::LeftButton){
-        qDebug() << "鼠标左按键被点击";
+
+    if(event -> button() == Qt::LeftButton)//只处理鼠标左键点击事件
         emit mouseLeftClicked();
-    }
+    //qDebug() << "鼠标左按键被点击";
 }
 
 void leftUserOperateItem::mouseMoveEvent(QMouseEvent *event)

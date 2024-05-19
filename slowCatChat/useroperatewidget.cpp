@@ -1,7 +1,7 @@
 #include "useroperatewidget.h"
 #include <QDebug>
 #include <QHBoxLayout>
-
+#include <QPushButton>
 userOperateWidget::userOperateWidget(QWidget *parent) : QWidget(parent)
 {
   QPixmap pixmap_1(":/icons/appIcon.png");
@@ -44,9 +44,13 @@ userOperateWidget::userOperateWidget(QWidget *parent) : QWidget(parent)
   m_vBoxLayout -> addWidget(m_menuIcon);
 
   //test
-
+  QPushButton *testbutton = new QPushButton;
+  testbutton -> setText("test");
+  QHBoxLayout *hBoxLayout = new QHBoxLayout;
+  hBoxLayout -> addLayout(m_vBoxLayout);
+  hBoxLayout -> addWidget(testbutton);
   //test
-  setLayout(m_vBoxLayout);
+  setLayout(hBoxLayout);
 
   setMouseTracking(true);//设置鼠标追踪
 }
@@ -71,7 +75,7 @@ void userOperateWidget::setToolIcon(leftUserOperateItem *item, QString pixmap_gr
     item ->setToolIcon(pixmap_gray);
     item -> setFixedSize(50,52);
     item -> setToolTip(toolText);
-    connect(item, &leftUserOperateItem::mouseMoveToToolIcon, this, [=](){
+    connect(item, &leftUserOperateItem::mouseMoveToToolIcon, this, [=](){//连接信号。改变图标颜色
         QPixmap pixmap_blue(pixmap_blue_path);
         item ->setToolIcon(pixmap_blue);
     });
