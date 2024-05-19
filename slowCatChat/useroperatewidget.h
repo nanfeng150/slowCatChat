@@ -24,9 +24,8 @@ signals:
 public slots:
 
 protected:
-    void mouseMoveEvent(QMouseEvent*) override;//鼠标移入事件
-    void leaveEvent(QEvent*) override; //鼠标离开事件
     void paintEvent(QPaintEvent*) override; //绘画事件
+
 private:
     leftUserOperateItem* m_userHeadIcon = nullptr;//头像
     leftUserOperateItem* m_userChatIcon = nullptr;//聊天
@@ -39,8 +38,6 @@ private:
 
     leftUserOperateItem* m_menuIcon = nullptr;//联系人
     QVBoxLayout* m_vBoxLayout = nullptr;
-
-
 };
 
 #endif // USEROPERATEWIDGET_H
