@@ -9,7 +9,10 @@
 #include <QPen>
 #include <QColor>
 #include <QPoint>
+#include <QFrame>
+#include <QScrollArea>
 #include "leftuseroperateitem.h"
+#include "friendchatlistwidget.h"
 class userOperateWidget : public QWidget
 {
     Q_OBJECT
@@ -38,6 +41,15 @@ private:
 
     leftUserOperateItem* m_menuIcon = nullptr;//联系人
     QVBoxLayout* m_vBoxLayout = nullptr;
+
+    //中间件
+    QFrame* m_middleWidget = nullptr;
+    friendChatListWidget* m_chatListWidget = nullptr;
+    QWidget *m_testWidget = nullptr; //测试使用 最右侧
+    QVBoxLayout* m_middleFrameLayout = nullptr;
+    QScrollArea* m_middleFrameScroll = nullptr;
+
+    QHBoxLayout* m_overallLayout = nullptr;
 };
 
 #endif // USEROPERATEWIDGET_H

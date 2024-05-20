@@ -24,7 +24,7 @@ friendChatItem::friendChatItem(QWidget* parent) : QWidget(parent)
     m_vBoxlayout -> addWidget(m_friendName);
     m_vBoxlayout -> addWidget(m_lastTimeChatMsg);
 
-    m_space = new QSpacerItem(10, 0, QSizePolicy::Expanding);
+    m_space = new QSpacerItem(5, 0);
 
     m_hBoxlayout = new QHBoxLayout;
     m_hBoxlayout -> addWidget(m_friendHeadSculpture);
@@ -58,6 +58,8 @@ friendChatItem::friendChatItem(QWidget* parent) : QWidget(parent)
         this -> setPalette(palette);
         this -> setAutoFillBackground(true);//确保背景颜色被自动填充
     });
+    //设置边距
+    //setStyleSheet("friendChatItem {padding : 0px;}");
 }
 
 friendChatItem::~friendChatItem()

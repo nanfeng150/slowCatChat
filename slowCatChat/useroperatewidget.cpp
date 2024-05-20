@@ -2,11 +2,7 @@
 #include <QDebug>
 #include <QHBoxLayout>
 #include <QPushButton>
-
-#define DEVELOP_DEBUG_INFO_ONE(MESSAGE) {qDebug() << MESSAGE;}
-#define DEVELOP_DEBUG_INFO_TWO(NAME, VALUE) {qDebug() << NAME << " = " << VALUE;}
-#define DEVELOP_DEBUG_INFO_THREE(NAME, VALUE, MESSAGE) {qDebug() << NAME << " = " << VALUE << "---" \
-                                                         << MESSAGE;}
+#include <QScrollArea>
 
 userOperateWidget::userOperateWidget(QWidget *parent) : QWidget(parent)
 {
@@ -33,7 +29,7 @@ userOperateWidget::userOperateWidget(QWidget *parent) : QWidget(parent)
     m_fileIcon = new leftUserOperateItem;
     setToolIcon(m_fileIcon, ":/icons/fileIcon_gray.png", ":/icons/fileIcon_blue.png", "文件");
 
-    m_space = new QSpacerItem(10, 350, QSizePolicy::Expanding);
+    m_space = new QSpacerItem(0, 350);
 
     m_vBoxLayout = new QVBoxLayout;
     m_vBoxLayout -> addWidget(m_userHeadIcon);
@@ -49,14 +45,36 @@ userOperateWidget::userOperateWidget(QWidget *parent) : QWidget(parent)
     setToolIcon(m_menuIcon, ":/icons/menuIcon_gray.png", ":/icons/menuIcon_blue.png", "文件");
     m_vBoxLayout -> addWidget(m_menuIcon);
 
-    //test
-    QPushButton *testbutton = new QPushButton;
-    testbutton -> setText("test");
-    QHBoxLayout *hBoxLayout = new QHBoxLayout;
-    hBoxLayout -> addLayout(m_vBoxLayout);
-    hBoxLayout -> addWidget(testbutton);
-    //test
-    setLayout(hBoxLayout);
+    m_middleWidget = new QFrame;//存放聊天列表;
+    m_chatListWidget = new friendChatListWidget;
+
+    m_middleFrameScroll = new QScrollArea;
+    m_middleFrameScroll -> setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);//屏蔽水平滚动条
+    m_middleFrameScroll -> setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+
+
+    m_middleFrameLayout = new QVBoxLayout(m_middleWidget);//
+    m_middleFrameLayout -> setContentsMargins(0, 0, 0, 0);//设置与父组件间的间距为0
+    m_middleFrameLayout -> addWidget(m_chatListWidget);
+    m_middleFrameScroll -> setWidget(m_middleWidget);//加入滚动条
+
+
+    //测试
+    m_testWidget = new QWidget;
+    m_testWidget -> setFixedSize(800, 900);
+    QPalette palette = this -> palette();
+    palette.setColor(QPalette::Background, Qt::white);
+    m_testWidget -> setPalette(palette);
+    m_testWidget -> setAutoFillBackground(true);//确保背景颜色被自动填充
+    //测试
+
+    m_overallLayout= new QHBoxLayout;
+    m_overallLayout -> setContentsMargins(0, 0, 0, 0);
+    m_overallLayout -> addLayout(m_vBoxLayout);
+    m_overallLayout -> addWidget(m_middleFrameScroll);
+    m_overallLayout -> addWidget(m_testWidget);
+
+    setLayout(m_overallLayout);
 
     setMouseTracking(true);//设置鼠标追踪
 }
@@ -73,6 +91,13 @@ userOperateWidget::~userOperateWidget()
     delete m_videoIcon;
     delete m_musicIcon;
     delete m_fileIcon;
+    delete m_middleWidget;
+    delete m_chatListWidget;
+    delete m_testWidget;
+    delete m_middleFrameLayout;
+    delete m_middleFrameScroll;
+    delete m_overallLayout;
+
 }
 
 void userOperateWidget::setToolIcon(leftUserOperateItem *item, QString pixmap_gray_path, QString pixmap_blue_path, QString toolText)
@@ -93,8 +118,13 @@ void userOperateWidget::setToolIcon(leftUserOperateItem *item, QString pixmap_gr
 
 void userOperateWidget::paintEvent(QPaintEvent *)
 {
-    QPainter painter(this);
-    painter.setPen(QPen(Qt::white, 2));
-    painter.drawLine(QPoint(80, 0), QPoint(80, this -> height()));
-    painter.drawLine(QPoint(400, 0), QPoint(400, this -> height()));
+    //QPainter painter(this);
+    //painter.setPen(QPen(Qt::white, 2));
+    //painter.drawLine(QPoint(60, 0), QPoint(60, this -> height()));
+    //painter.drawLine(QPoint(433, 0), QPoint(433, this -> height()));
+    m_testWidget -> setFixedSize(this -> width() - 450, this -> height());
+    QPalette palette = this -> palette();
+    palette.setColor(QPalette::Background, Qt::white);
+    m_testWidget -> setPalette(palette);
+    m_testWidget -> setAutoFillBackground(true);//确保背景颜色被自动填充
 }
