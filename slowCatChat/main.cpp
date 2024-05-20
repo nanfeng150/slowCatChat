@@ -3,6 +3,7 @@
 //test
 #include "leftuseroperateitem.h"
 #include "useroperatewidget.h"
+#include "friendchatitem.h"
 //
 int main(int argc, char *argv[])
 {
@@ -10,11 +11,11 @@ int main(int argc, char *argv[])
     slowCatChat instance(nullptr);
 
     //test
-    userOperateWidget test;
+    friendChatItem test;
     test.setWindowTitle("slowcat");
     test.setWindowIcon(QIcon(":/icons/appIcon.png"));
-    test.resize(1250, 880);
-    test.setMinimumSize(400, 900);
+    //test.resize(1250, 880);
+    //test.setMinimumSize(400, 900);
     test.show();
     //test
 

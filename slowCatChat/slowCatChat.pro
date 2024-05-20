@@ -31,7 +31,9 @@ SOURCES += \
     slowcatchat.cpp \
     setusername.cpp \
     leftuseroperateitem.cpp \
-    useroperatewidget.cpp
+    useroperatewidget.cpp \
+    friendchatitem.cpp \
+    friendchatlistwidget.cpp
 
 HEADERS += \
         accountoperate.h \
@@ -39,7 +41,9 @@ HEADERS += \
     slowcatchat.h \
     setusername.h \
     leftuseroperateitem.h \
-    useroperatewidget.h
+    useroperatewidget.h \
+    friendchatitem.h \
+    friendchatlistwidget.h
 
 FORMS += \
         accountoperate.ui

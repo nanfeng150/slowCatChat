@@ -31,13 +31,13 @@ void leftUserOperateItem::mousePressEvent(QMouseEvent *event)
     //qDebug() << "鼠标左按键被点击";
 }
 
-void leftUserOperateItem::mouseMoveEvent(QMouseEvent *event)
+void leftUserOperateItem::mouseMoveEvent(QMouseEvent*)
 {
     //qDebug() << "鼠标移入工具控件上";
     emit mouseMoveToToolIcon();
 }
 
-void leftUserOperateItem::leaveEvent(QEvent *event)
+void leftUserOperateItem::leaveEvent(QEvent*)
 {
     //qDebug() << "鼠标离开工具控件上";
     emit mouseLeaveToToolIcon();
