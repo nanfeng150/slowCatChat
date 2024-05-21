@@ -47,6 +47,8 @@ userOperateWidget::userOperateWidget(QWidget *parent) : QWidget(parent)
 
     m_middleWidget = new QFrame;//存放聊天列表;
     m_chatListWidget = new friendChatListWidget;
+    //查询数据库，获取该用户的最近一次下线前的聊天记录
+    queryDBGetLastTimeChatMSg();
 
     m_middleFrameScroll = new QScrollArea;
     m_middleFrameScroll -> setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);//屏蔽水平滚动条
@@ -77,6 +79,7 @@ userOperateWidget::userOperateWidget(QWidget *parent) : QWidget(parent)
     setLayout(m_overallLayout);
 
     setMouseTracking(true);//设置鼠标追踪
+
 }
 
 userOperateWidget::~userOperateWidget()
@@ -114,6 +117,14 @@ void userOperateWidget::setToolIcon(leftUserOperateItem *item, QString pixmap_gr
         QPixmap pixmap_gray(pixmap_gray_path);
         item ->setToolIcon(pixmap_gray);
     });
+}
+
+void userOperateWidget::queryDBGetLastTimeChatMSg()
+{
+    for(int i = 0; i < 20; i++){
+       friendChatItem* item = new friendChatItem("zhengchegdong", "hello 2B");
+       m_chatListWidget -> addChatListItem(item);
+    }
 }
 
 void userOperateWidget::paintEvent(QPaintEvent *)

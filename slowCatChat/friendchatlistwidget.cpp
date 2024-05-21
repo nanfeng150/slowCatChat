@@ -4,55 +4,50 @@ friendChatListWidget::friendChatListWidget(QWidget *parent) : QWidget (parent)
 {
     m_vHboxLayout = new QVBoxLayout;
 
-    friendChatItem *item1 = new friendChatItem;
-    item1 -> setFixedSize(370, 100);
-    m_friendChatListItem.append(item1);
-    friendChatItem *item2 = new friendChatItem;
-    item2 -> setFixedSize(370, 100);
-    m_friendChatListItem.append(item2);
-    friendChatItem *item3 = new friendChatItem;
-    item3 -> setFixedSize(370, 100);
-    m_friendChatListItem.append(item3);
-    friendChatItem *item4 = new friendChatItem;
-    item4 -> setFixedSize(370, 100);
-    m_friendChatListItem.append(item4);
-    friendChatItem *item5 = new friendChatItem;
-    item5 -> setFixedSize(370, 100);
-    m_friendChatListItem.append(item5);
-    friendChatItem *item6 = new friendChatItem;
-    item6 -> setFixedSize(370, 100);
-    m_friendChatListItem.append(item6);
-    friendChatItem *item7 = new friendChatItem;
-    item7 -> setFixedSize(370, 100);
-    m_friendChatListItem.append(item7);
-    friendChatItem *item8 = new friendChatItem;
-    item8 -> setFixedSize(370, 100);
-    m_friendChatListItem.append(item8);
-    friendChatItem *item9 = new friendChatItem;
-    item9 -> setFixedSize(370, 100);
-    m_friendChatListItem.append(item9);
-    friendChatItem *item10 = new friendChatItem;
-    item10 -> setFixedSize(370, 100);
-    m_friendChatListItem.append(item10);
-
-
     showChatLListItm();
 }
 
 friendChatListWidget::~friendChatListWidget()
 {
     delete m_vHboxLayout;
+    clearList();
 }
 
 void friendChatListWidget::addChatListItem(friendChatItem *item)
 {
+    item -> setFixedSize(370, 100);
     m_friendChatListItem.append(item);
+
+    connect(item, &friendChatItem::mouseEnterFriendItem, item, &friendChatItem::setGrayBack);
+    connect(item, &friendChatItem::mouseLeaveFriendItem, item, &friendChatItem::setWhiteBack);
+    connect(item, &friendChatItem::mousePressFriendItem, [=](){
+        for(uint i = 0; i < m_friendChatListItem.size(); i++){
+            m_friendChatListItem[i] -> setAllWhiteBack();
+            m_friendChatListItem[i] -> setBackIsBlue(false);
+        }
+        item -> setBlueBack();
+        item -> setBackIsBlue(true);
+    });
+
+    updateChatList();
+}
+
+void friendChatListWidget::moveChatListItem(friendChatItem *item)
+{
+    if(m_friendChatListItem.isEmpty() || nullptr == item)
+        return;
+    QList<friendChatItem*>::iterator it;
+    for(it = m_friendChatListItem.begin(); it != m_friendChatListItem.end(); it++){//删除列表项
+        if(*it == item){
+           m_friendChatListItem.erase(it);
+           break;
+        }
+    }
     updateChatList();
 }
 
 void friendChatListWidget::showChatLListItm()
 {
-    //QList<friendChatItem *>::iterator it;
     for(uint i = 0; i < m_friendChatListItem.size(); i++)
         m_vHboxLayout -> addWidget(m_friendChatListItem[i]);
     m_vHboxLayout -> setContentsMargins(0, 0, 0, 0);//设置列表的边距
@@ -64,10 +59,18 @@ void friendChatListWidget::updateChatList()
 {
     //先清空布局类的控件
     delete this -> layout();
-    delete m_vHboxLayout;
+    //delete m_vHboxLayout;
     m_vHboxLayout = nullptr;
     m_vHboxLayout = new QVBoxLayout;
-    for(uint i = 0; i < m_friendChatListItem.size(); i++)
-        m_vHboxLayout -> addWidget(m_friendChatListItem[i]);
-    this -> setLayout(m_vHboxLayout);
+    showChatLListItm();
+}
+
+void friendChatListWidget::clearList()
+{
+    QList<friendChatItem*>::iterator it;
+    for(it = m_friendChatListItem.begin(); it != m_friendChatListItem.end(); ){
+        QList<friendChatItem*>::iterator it_1 = it;
+        it++;
+        m_friendChatListItem.erase(it_1);//删除前一个列表项
+    }
 }

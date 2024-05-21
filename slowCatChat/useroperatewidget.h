@@ -21,6 +21,8 @@ public:
     ~userOperateWidget() override;
 
     void setToolIcon(leftUserOperateItem* item, QString pixmap_gray_path, QString pixmap_blue_path, QString toolText);
+    void queryDBGetLastTimeChatMSg();
+
 
 signals:
 

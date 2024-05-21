@@ -9,15 +9,12 @@ friendChatItem::friendChatItem(QWidget* parent) : QWidget(parent)
     this -> setAutoFillBackground(true);//确保背景颜色被自动填充
 
     m_friendHeadSculpture = new QLabel;
-    //m_friendHeadSculpture -> setStyleSheet("QLabel {border : 2px solid red; }");
     setFriendHeadSculpture(m_friendHeadSculpture, ":/icons/appIcon.png");
 
     m_friendName = new QLabel;
-    //m_friendName -> setStyleSheet("QLabel {border : 2px solid red; }");
     setFriendName(m_friendName, "zhengchendong");
 
     m_lastTimeChatMsg = new QLabel;
-    //m_lastTimeChatMsg -> setStyleSheet("QLabel {border : 2px solid black; }");
     setLastTimeChatMsg(m_lastTimeChatMsg, "hello, I am zhengchendong");
 
     m_vBoxlayout = new QVBoxLayout;
@@ -32,34 +29,37 @@ friendChatItem::friendChatItem(QWidget* parent) : QWidget(parent)
     m_hBoxlayout -> addLayout(m_vBoxlayout);
 
     setLayout(m_hBoxlayout);
+}
 
-    //鼠标移入好友项时变灰色
-    connect(this, &friendChatItem::mouseEnterFriendItem, this, [&](){
-        if(m_flagMouseLeftButtonIdPress)
-            return;
-        QPalette palette = this -> palette();
-        palette.setColor(QPalette::Background, QColor(245,245,245));
-        this -> setPalette(palette);
-        this -> setAutoFillBackground(true);//确保背景颜色被自动填充
-    });
-    //鼠标移出时好友项变白色
-    connect(this, &friendChatItem::mouseLeaveFriendItem, this, [&](){
-        if(m_flagMouseLeftButtonIdPress)
-            return;
-        QPalette palette = this -> palette();
-        palette.setColor(QPalette::Background, Qt::white);
-        this -> setPalette(palette);
-        this -> setAutoFillBackground(true);//确保背景颜色被自动填充
-    });
-    //点击鼠标左键时选中变为蓝色
-    connect(this, &friendChatItem::mousePressFriendItem, this, [&](){
-        QPalette palette = this -> palette();
-        palette.setColor(QPalette::Background, QColor(0,153,255));
-        this -> setPalette(palette);
-        this -> setAutoFillBackground(true);//确保背景颜色被自动填充
-    });
-    //设置边距
-    //setStyleSheet("friendChatItem {padding : 0px;}");
+friendChatItem::friendChatItem(QString userName, QString chatMsg, QWidget *parent) : QWidget (parent)
+{
+    //设置白色背景
+    QPalette palette = this -> palette();
+    palette.setColor(QPalette::Background, Qt::white);
+    this -> setPalette(palette);
+    this -> setAutoFillBackground(true);//确保背景颜色被自动填充
+
+    m_friendHeadSculpture = new QLabel;
+    setFriendHeadSculpture(m_friendHeadSculpture, ":/icons/appIcon.png");
+
+    m_friendName = new QLabel;
+    setFriendName(m_friendName, userName);
+
+    m_lastTimeChatMsg = new QLabel;
+    setLastTimeChatMsg(m_lastTimeChatMsg, chatMsg);
+
+    m_vBoxlayout = new QVBoxLayout;
+    m_vBoxlayout -> addWidget(m_friendName);
+    m_vBoxlayout -> addWidget(m_lastTimeChatMsg);
+
+    m_space = new QSpacerItem(5, 0);
+
+    m_hBoxlayout = new QHBoxLayout;
+    m_hBoxlayout -> addWidget(m_friendHeadSculpture);
+    m_hBoxlayout -> addItem(m_space);
+    m_hBoxlayout -> addLayout(m_vBoxlayout);
+
+    setLayout(m_hBoxlayout);
 }
 
 friendChatItem::~friendChatItem()
@@ -114,11 +114,45 @@ void friendChatItem::mousePressEvent(QMouseEvent *event)
 void friendChatItem::enterEvent(QEvent *)
 {
     emit mouseEnterFriendItem();
-    //qDebug() << "鼠标移入";
 }
 
 void friendChatItem::leaveEvent(QEvent *)
 {
     emit mouseLeaveFriendItem();
-    //qDebug() << "鼠标移出";
+}
+
+void friendChatItem::setWhiteBack()
+{
+    if(m_flagMouseLeftButtonIdPress)
+        return;
+    QPalette palette = this -> palette();
+    palette.setColor(QPalette::Background, Qt::white);
+    this -> setPalette(palette);
+    this -> setAutoFillBackground(true);//确保背景颜色被自动填充
+}
+
+void friendChatItem::setAllWhiteBack()
+{
+    QPalette palette = this -> palette();
+    palette.setColor(QPalette::Background, Qt::white);
+    this -> setPalette(palette);
+    this -> setAutoFillBackground(true);
+}
+
+void friendChatItem::setBlueBack()
+{
+    QPalette palette = this -> palette();
+    palette.setColor(QPalette::Background, QColor(0,153,255));
+    this -> setPalette(palette);
+    this -> setAutoFillBackground(true);
+}
+
+void friendChatItem::setGrayBack()
+{
+    if(m_flagMouseLeftButtonIdPress)
+        return;
+    QPalette palette = this -> palette();
+    palette.setColor(QPalette::Background, QColor(245,245,245));
+    this -> setPalette(palette);
+    this -> setAutoFillBackground(true);
 }

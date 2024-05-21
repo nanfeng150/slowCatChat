@@ -25,12 +25,15 @@ class friendChatItem : public QWidget
 
 public:
     friendChatItem(QWidget* parent = nullptr);
+    friendChatItem(QString userName, QString chatMsg, QWidget* parent = nullptr);//重载
     ~friendChatItem() override;
 
     void setFriendHeadSculpture(QLabel*, QString);
     void setFriendName(QLabel*, QString);
     void setLastTimeChatMsg(QLabel*, QString);
     void setFriendItem(QString, QString, QString); //设置朋友项消息
+
+    void setBackIsBlue(bool isBlue){m_flagMouseLeftButtonIdPress = isBlue;}
 
 protected:
     void mousePressEvent(QMouseEvent*) override;//鼠标点击事件
@@ -41,7 +44,12 @@ signals:
     void mouseEnterFriendItem();
     void mouseLeaveFriendItem();
     void mousePressFriendItem();
+
 public slots:
+    void setWhiteBack();//设置白色背景
+    void setAllWhiteBack();//设置全部背景为白色
+    void setBlueBack(); //设置绿色背景
+    void setGrayBack(); //设置灰色背景
 
 private:
     QLabel* m_friendHeadSculpture = nullptr; // 存放好友头像

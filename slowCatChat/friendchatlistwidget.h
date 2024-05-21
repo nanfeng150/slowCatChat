@@ -13,8 +13,10 @@ public:
     ~friendChatListWidget();
 public:
     void addChatListItem(friendChatItem*); //添加聊天列表项
+    void moveChatListItem(friendChatItem*);//移出好友列表项
     void showChatLListItm();//显示好友列表项
     void updateChatList();//刷新好友列表项
+    void clearList();//清理内存
 
 private:
     QList<friendChatItem*> m_friendChatListItem;//存储聊天列表项
