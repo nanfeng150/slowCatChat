@@ -4,7 +4,7 @@ slowCatChat::slowCatChat(QObject *parent) : QObject(parent)
 {
     //初始化登录界面
     m_accountOperateWidget = new accountOperate;
-    //m_accountOperateWidget -> show();
+    m_accountOperateWidget -> show();
 
     //套接字
     m_tcpSocket = new QTcpSocket;

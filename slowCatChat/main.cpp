@@ -15,12 +15,12 @@ int main(int argc, char *argv[])
     slowCatChat instance(nullptr);
 
     //test
-    userOperateWidget test;
+    /*userOperateWidget test;
     test.setWindowTitle("slowcat");
     test.setWindowIcon(QIcon(":/icons/appIcon.png"));
     test.resize(1250, 880);
     test.setMinimumSize(400, 900);
-    test.show();
+    test.show();*/
     //test
 
     return a.exec();
